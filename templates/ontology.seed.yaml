@@ -1,0 +1,135 @@
+# ontology.seed.yaml — STARTER ontology schema
+#
+# This is a GENERIC seed. The coach copies it into the user's memory as
+# `ontology.yaml`, then REPLACES the placeholder examples below with the real
+# projects, themes, and entities it derives from the user's own notes.
+#
+# The ontology is the "semantic spine" of the memory: it never holds facts
+# (those live in the wiki pages) — it holds CLASSIFICATION and TOPOLOGY. It says
+# how the pages relate: which project each belongs to, which themes it touches,
+# which people/orgs/products it mentions, and where projects connect.
+#
+# Keep it SMALL and STABLE. A couple dozen themes, not hundreds. The whole point
+# is a controlled vocabulary — one canonical name per idea, so the same concept
+# never forks into three different tags.
+
+# Schema version. The nightly refresh bumps this whenever it changes the
+# vocabulary (adds/renames/merges a theme or entity), so changes are traceable.
+version: 1
+updated: "2026-01-01"   # ISO date of the last ontology change
+
+# ---------------------------------------------------------------------------
+# PROJECTS — the primary organizing spine and the main graph color.
+# Every wiki page belongs to EXACTLY ONE project. Give each a short id (the key),
+# a display name, a one-line description, and a hex color for the graph.
+# Replace these three placeholders with the user's real areas of work.
+# ---------------------------------------------------------------------------
+projects:
+  project-a:
+    name: Project A
+    desc: One-line description of the first main area of work.
+    color: "#7C9CF0"          # blue
+  project-b:
+    name: Project B
+    desc: One-line description of the second main area of work.
+    color: "#6FCF97"          # green
+  general:
+    name: General / Practice
+    desc: Personal notes, methods, lessons, anything that isn't a named project.
+    color: "#9AA0A6"          # grey
+
+# ---------------------------------------------------------------------------
+# THEMES — the controlled vocabulary of CONCEPTS.
+# Each theme has a canonical id (the key), a display name, a one-line definition,
+# and the list of projects it appears in. A page carries its top 1-5 themes.
+# Rule: fold synonyms into ONE theme. "billing", "invoices", "payments" should be
+# a single canonical theme — never three. Definitions keep the boundaries clear.
+# ---------------------------------------------------------------------------
+themes:
+  example-theme-one:
+    name: Example Theme One
+    def: A one-line definition of what this concept covers and where its edges are.
+    projects:
+      - project-a
+  example-theme-two:
+    name: Example Theme Two
+    def: Another concept; note it can span more than one project.
+    projects:
+      - project-a
+      - project-b
+  example-theme-three:
+    name: Example Theme Three
+    def: A cross-cutting concept that shows up in general practice notes too.
+    projects:
+      - project-b
+      - general
+
+# ---------------------------------------------------------------------------
+# ENTITIES — the people, organizations, and products that RECUR across notes.
+# Each has an id (the key), a display name, a type (person | org | product),
+# and the projects it's associated with. Only include things that recur — a
+# one-off mention doesn't need an entity hub.
+# ---------------------------------------------------------------------------
+entities:
+  example-person:
+    name: Example Person
+    type: person
+    projects:
+      - project-a
+  example-org:
+    name: Example Organization
+    type: org
+    projects:
+      - project-a
+      - project-b
+  example-product:
+    name: Example Product
+    type: product
+    projects:
+      - project-b
+
+# ---------------------------------------------------------------------------
+# BRIDGES — the high-value output: structural connections that SPAN projects.
+# A bridge names a synthesis or an open question that ties two or more projects
+# together. The nightly refresh mines for these automatically. Each bridge has
+# an id, a name, the projects it connects, and a one-line note on the link.
+# ---------------------------------------------------------------------------
+bridges:
+  - id: example-bridge
+    name: A connection that spans Project A and Project B
+    connects:
+      - project-a
+      - project-b
+    note: One line on why these two are really the same idea / share a dependency.
+
+# ---------------------------------------------------------------------------
+# OPTIONAL LAYERS — only for users whose work has a PORTFOLIO / VENTURE shape.
+# Delete these sections entirely if they don't apply. Most users won't need them.
+#
+# north_star: a single pinned, read-first page that frames the whole portfolio
+#             (who's who, what reports to what, current priorities). The assistant
+#             reads it first in every session.
+# ventures:   a parent organization and the things it owns / its verticals.
+# research:   research programs or workstreams that feed the products.
+# products:   products built by the ventures, and which research they embed.
+# ---------------------------------------------------------------------------
+# north_star: wiki/00-North-Star.md
+#
+# ventures:
+#   parent-org:
+#     name: Parent Org
+#     role: portfolio-parent
+#     children:
+#       - venture-one
+#       - venture-two
+#
+# research:
+#   - program-one
+#   - program-two
+#
+# products:
+#   product-one:
+#     name: Product One
+#     venture: venture-one
+#     embeds_research:
+#       - program-one

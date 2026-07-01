@@ -1,0 +1,85 @@
+# Memory Rulebook
+
+*The Coach places this file at the top of the user's vault as `CLAUDE.md`. It tells the assistant how to maintain a persistent, organized memory, and — critically — it carries the **Active Capabilities ledger** that the Coach updates at the end of each phase so every capability is actually used. Fill the {{PLACEHOLDERS}} with the user during setup.*
+
+You are maintaining a persistent, structured knowledge base inside this folder. Knowledge **compounds**: don't re-derive answers each time — build on what's already organized here. This follows the "LLM Wiki" pattern: you act as a *compiler* that turns immutable raw sources into a clean, interlinked wiki.
+
+## 🧰 Active Capabilities (auto-maintained — USE these, do not ignore them)
+
+*These are the capabilities currently live in this system. Each directive is binding; a capability that exists but isn't used is wasted. The Coach appends to this list at the end of every phase. Until Phase 1 completes, this section is empty.*
+
+<!-- CAPABILITIES:START -->
+_(none yet — the Coach will register capabilities here as each phase completes)_
+<!-- CAPABILITIES:END -->
+
+Reference directives the Coach will add, verbatim, as each phase finishes:
+- **🧠 Memory wiki: ACTIVE.** Before answering any substantive question, read `wiki/index.md` and the relevant pages first; answer from memory with citations. Maintain memory per the workflows below.
+- **🌙 Nightly sweep: ACTIVE.** Sessions and new documents are auto-captured into memory nightly; full transcripts saved to `raw/`. Don't assume recent work is missing — check.
+- **🧹 memory-keeper: ACTIVE.** Save / brief / tidy the memory wiki on request; follow the rules in this file.
+- **🗓️ consolidate-memory (monthly): ACTIVE.** A scheduled monthly pass merges duplicates, prunes orphans, repairs links, dedupes the index, and refreshes the ontology if present.
+- **✍️ house-style: ACTIVE.** Apply the user's writing standards (locale, no em-dashes, no AI-tell vocabulary, sourcing) to all written content; read their Voice & Style Card first.
+- **🔬 jobs-ive-taste: ACTIVE.** Critique user-facing content before it ships (concept, then craft).
+- **🔨 Build discipline: ACTIVE.** One change at a time; plan first; prove it works; capture ideas, don't chase them.
+- **🗺️ Ontology & graph: ACTIVE.** Classify every new/updated page (project/themes/entities) and link its hubs; frame answers by project/theme.
+- **⭐ North-Star: ACTIVE.** Read the pinned North-Star page first on strategic questions.
+
+## Folder structure
+
+```
+raw/        — original source material (READ only, never change)
+wiki/       — your own clean, organized pages (you own these)
+  index.md  — the catalog of every page (update on every change)
+  log.md    — a running history of changes (append on every change)
+CLAUDE.md   — this file (the rules + capability ledger)
+```
+
+Group material into **topics** — one sub-folder per major area. Start simple; ask before adding a new topic.
+
+```
+Topics (set with the user):
+{{TOPICS}}   e.g. - work · - learning · - personal
+```
+
+Pre-existing files at the top level are the person's own notes. **Never modify them.**
+
+## How every wiki page is structured
+
+```
+---
+title: "Page Title"
+topic: {{topic}}
+type: source | topic | person | comparison | summary
+sources: [raw files this is based on]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+
+## Facts
+(Terse, accurate, organized. Tables where useful. Every claim cites a source by name. No opinions.)
+
+## Takeaways
+(Add once there's enough evidence: what it means, what's unknown, how it connects. Flag contradictions.)
+```
+
+Write **facts first**; add Takeaways only when there's enough to say.
+
+## Workflows
+
+**Feed it (new information):** read it → summarize for the person → save the original to `raw/{topic}/` → create/update a `source` page in `wiki/{topic}/` → read `index.md` and update related pages → add Takeaways where warranted → update `index.md` and `log.md` → report what you filed and linked.
+
+**Get briefed (a question):** read `index.md` → read relevant pages → answer citing pages by name → offer to save a substantial answer as a `summary` page.
+
+**Tidy (lint):** report orphan pages, facts-only pages ready for takeaways, broken links, missing catalog entries, outdated facts. **Wait for approval** before changing anything.
+
+**Nightly sweep (automatic):** capture knowledge from sessions + new docs into memory; save full sources to `raw/`; keep the wiki a compiled briefing, not a transcript dump. (Installed in Phase 1.)
+
+## Hard rules
+
+- **Never** change anything in `raw/` or the person's own top-level notes.
+- **Always** update `index.md` and `log.md` on any wiki change.
+- **Always** cite sources; link related pages with `[[Page Title]]`.
+- **Ask** before creating a new topic or saving a question's answer as a page.
+- Keep language plain. Assume the person is smart but not technical.
+- **Honor the Active Capabilities ledger above** — those directives are binding.
+
+> IMPORTANT (Coach): register ONLY the directive(s) for the phase you JUST completed, inserting them inside the CAPABILITIES:START/END block above. NEVER pre-populate directives for phases the user has not done yet. The list above is a reference menu, not the live ledger.
