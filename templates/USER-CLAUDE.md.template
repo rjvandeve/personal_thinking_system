@@ -1,0 +1,74 @@
+# Memory Rulebook — Context Vault: {{CONTEXT_NAME}}
+
+*The Coach places this file at the top of ONE context-vault (e.g. `vaults/{{context-id}}/CLAUDE.md`). It tells the assistant how to maintain a persistent, organized memory **for this context**. The brain-level rulebook (the root `CLAUDE.md`) handles routing between vaults and synthesis across them, and carries the Active Capabilities ledger. Fill the {{PLACEHOLDERS}} with the user during setup.*
+
+```yaml
+context: {{context-id}}        # short id for this vault (e.g. acme, board-seat, personal)
+private: false                 # set true to firewall this vault OUT of cross-vault synthesis
+```
+
+You are maintaining a persistent, structured knowledge base for the **{{CONTEXT_NAME}}** context, inside this folder. Knowledge **compounds**: don't re-derive answers each time — build on what's already organized here. This follows the "LLM Wiki" pattern: you act as a *compiler* that turns immutable raw sources into a clean, interlinked wiki. This vault is one context within a larger brain; the root `CLAUDE.md` decides what belongs here and connects it to the other contexts.
+
+## The private flag
+
+If `private: true` above, this vault is still maintained normally, but the brain **excludes it from cross-vault surfacing** — its pages are not pulled into the master `_ontology/index.md`, not used for cross-vault bridges, and not surfaced when the person is working in another context. Use this only for material that must never co-mingle. Default is `false` (this context participates in the single brain).
+
+## Folder structure (this vault)
+
+```
+raw/        — original source material for THIS context (READ only, never change)
+wiki/       — your own clean, organized pages for THIS context (you own these)
+  index.md  — the catalog of every page in this vault (update on every change)
+  log.md    — a running history of changes (append on every change)
+CLAUDE.md   — this file (this vault's rules)
+```
+
+Within this vault, group material into **topics** — one sub-folder per major area of this context. Start simple; ask before adding a new topic.
+
+```
+Topics for this context (set with the user):
+{{TOPICS}}   e.g. - projects · - people · - decisions
+```
+
+Pre-existing files at the top level are the person's own notes. **Never modify them.**
+
+## How every wiki page is structured
+
+```
+---
+title: "Page Title"
+context: {{context-id}}
+topic: {{topic}}
+type: source | topic | person | comparison | summary
+sources: [raw files this is based on]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+
+## Facts
+(Terse, accurate, organized. Tables where useful. Every claim cites a source by name. No opinions.)
+
+## Takeaways
+(Add once there's enough evidence: what it means, what's unknown, how it connects. Flag contradictions.)
+```
+
+Write **facts first**; add Takeaways only when there's enough to say.
+
+## Workflows
+
+**Feed it (new information for this context):** read it → summarize for the person → save the original to `raw/{topic}/` → create/update a `source` page in `wiki/{topic}/` → read this vault's `index.md` and update related pages → add Takeaways where warranted → update `index.md` and `log.md` → report what you filed and linked. (If the material actually belongs to a *different* context, hand it back to the brain to route — don't force it in here.)
+
+**Get briefed (a question):** the brain reads the master `_ontology/index.md` first and pulls across vaults. Within this vault, read `index.md` → read relevant pages → answer citing pages by name → offer to save a substantial answer as a `summary` page.
+
+**Tidy (lint):** report orphan pages, facts-only pages ready for takeaways, broken links, missing catalog entries, outdated facts. **Wait for approval** before changing anything.
+
+**Nightly sweep (automatic):** the brain captures knowledge from sessions + new docs, classifies it, and routes it into the right context-vault; it saves full sources to that vault's `raw/` and keeps the wiki a compiled briefing, not a transcript dump. (Installed in Phase 1.)
+
+## Hard rules
+
+- **Never** change anything in `raw/` or the person's own top-level notes.
+- **Always** update this vault's `index.md` and `log.md` on any change here.
+- **Always** cite sources; link related pages with `[[Page Title]]`.
+- **Ask** before creating a new topic or saving a question's answer as a page.
+- Keep language plain. Assume the person is smart but not technical.
+- If material doesn't belong to this context, **route it via the brain**, don't file it here.

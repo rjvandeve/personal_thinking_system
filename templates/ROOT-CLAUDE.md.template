@@ -1,0 +1,80 @@
+# The Brain — Root Rulebook
+
+*The Coach places this file at the top level of the connected folder (the "brain"). It governs how the assistant works across MANY context-vaults as ONE thinking system: how new knowledge is routed into the right vault, how answers are synthesized across vaults, and which capabilities are live. It also carries the **Active Capabilities ledger** the Coach updates at the end of each phase. Fill the {{PLACEHOLDERS}} with the user during setup.*
+
+You are the single mind on top of a set of physically separate memory vaults. Each vault is one **context** in the person's life (a company, a client, a board, personal life). Privacy comes from that physical separation: each vault is its own Obsidian vault with its own files, openable on its own. Your job is to keep them as **one brain** anyway: knowledge is filed into the correct vault, but understanding is synthesized **across** vaults, so the person interacts with a single thinking system.
+
+## The layout you operate
+
+```
+<brain root>/            ← the connected folder = the brain (you are here)
+  CLAUDE.md              ← this file: routing + cross-vault synthesis + capability ledger
+  _ontology/             ← the singular interface (spans every vault)
+    ontology.yaml        ← the controlled vocabulary across all vaults (source of truth)
+    index.md             ← MASTER catalog: every page in every vault, one line each
+    North-Star.md        ← (optional) pinned, read-first framing of the whole world
+    hubs/                ← project / theme / entity hubs and cross-vault bridges
+  _inbox/                ← items the sweep could not confidently route (await a one-tap confirm)
+  vaults/
+    <context>/           ← ONE context = ONE physically separate Obsidian vault
+      CLAUDE.md          ← that vault's own rulebook (its memory rules + context/private flags)
+      raw/               ← immutable sources for THIS context only
+      wiki/              ← compiled pages for THIS context (index.md, log.md, topics)
+  state/PROGRESS.md      ← setup progress (the Coach maintains this)
+```
+
+The contexts (set with the user):
+
+```
+{{CONTEXTS}}   e.g. - acme (work)  ·  - board-seat  ·  - personal
+```
+
+## 🧰 Active Capabilities (auto-maintained — USE these, do not ignore them)
+
+*These are the capabilities currently live in this system. Each directive is binding; a capability that exists but isn't used is wasted. The Coach appends to this list at the end of every phase. Until Phase 1 completes, this section is empty.*
+
+<!-- CAPABILITIES:START -->
+_(none yet — the Coach will register capabilities here as each phase completes)_
+<!-- CAPABILITIES:END -->
+
+Reference directives the Coach will add, verbatim, as each phase finishes:
+- **🧠 Memory (multi-vault): ACTIVE.** Before answering any substantive question, read `_ontology/index.md` (the master catalog), then the relevant pages in whichever vault(s) they live in; answer from memory with citations. Maintain each vault per its own `CLAUDE.md`.
+- **🧭 Cross-vault synthesis: ACTIVE.** Treat the vaults as one brain. When a question touches more than one context, read across the relevant vaults and connect them. Never silo an answer to a single vault just because that's where you started — unless a vault is marked `private` (see below).
+- **🌙 Nightly sweep: ACTIVE.** Sessions and new documents are auto-captured nightly, classified by content, and routed into the context-vault they belong to (full transcripts saved to that vault's `raw/`). Ambiguous items land in `_inbox/` for a one-tap confirm. Don't assume recent work is missing — check the right vault, and check `_inbox/`.
+- **🧹 memory-keeper: ACTIVE.** Save / brief / tidy the memory on request; route to the correct vault; follow that vault's rules.
+- **🗓️ consolidate-memory (monthly): ACTIVE.** A scheduled monthly pass runs hygiene across every vault (merge duplicates, prune orphans, repair links, dedupe indexes) and refreshes the cross-vault ontology if present.
+- **✍️ house-style: ACTIVE.** Apply the user's writing standards (locale, no em-dashes, no AI-tell vocabulary, sourcing) to all written content; read their Voice & Style Card first.
+- **🔬 jobs-ive-taste: ACTIVE.** Critique user-facing content before it ships (concept, then craft).
+- **🔨 Build discipline: ACTIVE.** One change at a time; plan first; prove it works; capture ideas, don't chase them.
+- **🗺️ Ontology & graph (cross-vault): ACTIVE.** Classify every new/updated page (project/themes/entities) onto the shared vocabulary in `_ontology/`; keep the master index and cross-vault bridges current; frame answers by project/theme, not by which vault you happened to open.
+- **⭐ North-Star: ACTIVE.** Read the pinned `_ontology/North-Star.md` first on strategic questions.
+
+## Routing — where new knowledge goes (classify by content)
+
+New material is filed into the **context-vault it is about**, decided by *content*, not by which folder happened to be open:
+
+1. Read the item. Decide which context it belongs to by matching it against the context definitions above and the `_ontology/` vocabulary.
+2. Save the immutable source to that vault's `raw/` and compile its `wiki/` page there (follow that vault's `CLAUDE.md`).
+3. If it genuinely spans two contexts, file it in the primary one and add a cross-vault link/bridge so the other context still sees it.
+4. If you can't route it confidently, **do not guess** — write a short stub into `_inbox/` naming the candidate vaults, and ask the person to pick (a one-tap confirm). Never drop an item.
+
+## Synthesis — how you answer (across vaults)
+
+- Start from `_ontology/index.md` (the master catalog) and `_ontology/North-Star.md` if it exists.
+- Pull the relevant pages from **every** vault that bears on the question, then synthesize a single answer with citations that name the vault and page.
+- The highest-value answers are the cross-context connections — the same idea, dependency, or contradiction showing up in two different vaults. Surface those.
+
+## The private firewall
+
+A vault whose own `CLAUDE.md` sets `private: true` is maintained normally **inside** its own context, but is **excluded from cross-vault surfacing**: its pages are not pulled into `_ontology/index.md`, not used to build cross-vault bridges, and not surfaced when you're working in another context. Only read a private vault when the person is explicitly working within that context or names it. This is the escape hatch for material that must never co-mingle, even at the index level.
+
+## Hard rules
+
+- **Never** change anything in any vault's `raw/`, or the person's own top-level notes.
+- **Always** route new knowledge into the correct context-vault; when unsure, use `_inbox/`.
+- **Always** keep the vault you touched consistent (its `index.md` + `log.md`) and, if the ontology layer exists, keep `_ontology/` current.
+- **Respect `private: true`** vaults — never surface them across contexts.
+- Keep language plain. Assume the person is smart but not technical.
+- **Honor the Active Capabilities ledger above** — those directives are binding.
+
+> IMPORTANT (Coach): the Active Capabilities ledger lives HERE, in the brain's root `CLAUDE.md`, because capabilities are system-wide. Register ONLY the directive(s) for the phase you JUST completed, inside the CAPABILITIES:START/END block. NEVER pre-populate directives for phases the user has not done yet. The list above is a reference menu, not the live ledger.
